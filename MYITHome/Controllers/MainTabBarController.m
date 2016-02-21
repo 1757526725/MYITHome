@@ -28,7 +28,6 @@
     UINavigationController *informationNav = [[UINavigationController alloc]initWithRootViewController:informationVC];
     [informationNav.tabBarItem setTitle:@"资讯"];
     [informationNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:ColorWithRGB(255, 143, 92, 1)} forState:UIControlStateSelected];
-    //item0.selectedImage = [[UIImage imageNamed:@"recognize-1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];;
     [informationNav.tabBarItem setImage:[[UIImage imageNamed:@"TabBarIcon_Infomation"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [informationNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"TabBarIcon_Infomation_Highlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [informationNav.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
