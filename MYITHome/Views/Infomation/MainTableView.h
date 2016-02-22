@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MainTableViewCellModel.h"
 @interface MainTableView : UITableView
+
 - (instancetype)initWithFrame:(CGRect)frame detailsID:(NSInteger)detailsID;
 @end

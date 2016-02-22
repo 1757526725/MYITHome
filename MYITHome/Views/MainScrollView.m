@@ -9,16 +9,23 @@
 #import "MainScrollView.h"
 #import "InfoMainView.h"
 #import "BannerView.h"
+@interface MainScrollView() <UIScrollViewDelegate>
+@end
 @implementation MainScrollView
 - (instancetype)initWithFrame:(CGRect)frame pages:(NSMutableArray *)pagesArray
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.frame = frame;
+        [self setDelegate:self];
         [self setViewsWithPageCount:pagesArray.count];
         [self setPageViews:pagesArray];
     }
     return self;
+}
+
+- (void)setCurrentPage:(CGFloat)currentPage{
+    [self setContentOffset:CGPointMake(currentPage * self.size_Width, 0)];
 }
 
 - (void)setPageViews:(NSMutableArray *)pagesArray{
@@ -26,6 +33,10 @@
         InfoMainView *infoMainView = [[InfoMainView alloc]initWithFrame:CGRectMake(i*self.size_Width, 0, self.size_Width, self.size_Height) details:i];
         [self addSubview:infoMainView];
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    _tBlock(scrollView.contentOffset.x/self.size_Width);
 }
 
 - (void)setViewsWithPageCount:(NSInteger)pageCount{

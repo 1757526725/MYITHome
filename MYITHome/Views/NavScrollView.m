@@ -25,6 +25,22 @@
     return self;
 }
 
+//用block传递,控制导航栏和主scrollview联动
+- (void)setCurrentPage:(CGFloat)currentPage{
+    for (NSInteger i = 0; i < _dataArr.count; i++){
+        UIButton *thebtn = [self viewWithTag:i+100];
+        if (i + 100 == currentPage+100) {
+            [thebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [thebtn.titleLabel setFont:[UIFont systemFontOfSize:18]];
+        }
+        else{
+            [thebtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [thebtn setTitleColor:ColorWithRGB(222, 174, 175, 1) forState:UIControlStateNormal];
+        }
+    }
+    [self setContentOffset:CGPointMake(currentPage * [self widthOfString:@"排行榜"], 0)];
+}
+
 /**
  *  配置按钮
  */
@@ -35,6 +51,7 @@
         [button setBackgroundColor:[UIColor clearColor]];
         [button setTitle:[_dataArr[i] objectForKey:@"n"] forState:UIControlStateNormal];
         [button setTitleColor:ColorWithRGB(222, 174, 175, 1) forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
         [self addSubview:button];
         currentX += [self widthOfString:[_dataArr[i] objectForKey:@"n"]]*2+20;
         [button setTag:i+100];
@@ -48,6 +65,19 @@
  *  @param button 所点击的按钮
  */
 - (void)navBarButtonClicked:(UIButton *)button{
+    for (NSInteger i = 0; i < _dataArr.count; i++){
+        UIButton *thebtn = [self viewWithTag:i+100];
+        if (i + 100 == button.tag) {
+            [thebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [thebtn.titleLabel setFont:[UIFont systemFontOfSize:18]];
+        }
+        else{
+            [thebtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            [thebtn setTitleColor:ColorWithRGB(222, 174, 175, 1) forState:UIControlStateNormal];
+        }
+    }
+    [self setContentOffset:CGPointMake((button.tag-100) * [self widthOfString:@"排行榜"], 0)];
+
     if (_tBlock) {
         _tBlock(button.tag-100);
     }
@@ -61,11 +91,11 @@
  *  @return 计算后的大小
  */
 - (CGSize)sizeOfDatas:(NSMutableArray *)dataArray{
-    NSDictionary *attributesDic = @{NSFontAttributeName:[UIFont systemFontOfSize:9]};
+    NSDictionary *attributesDic = @{NSFontAttributeName:[UIFont systemFontOfSize:16]};
     __block CGFloat width = 0;
-    CGFloat height = [[dataArray[0] objectForKey:@"n"] boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDic context:nil].size.height*2;
+    CGFloat height = [[dataArray[0] objectForKey:@"n"] boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDic context:nil].size.height;
     [dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        width += [[dataArray[idx] objectForKey:@"n"] boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDic context:nil].size.width*3+10;
+        width += [[dataArray[idx] objectForKey:@"n"] boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDic context:nil].size.width*2+10;
     }];
     return CGSizeMake(width, height);
 }

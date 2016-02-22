@@ -33,7 +33,7 @@
 
 - (void)setViewsWithDetailsID:(NSInteger)detailsID{
     MainTableView *mainTable = [[MainTableView alloc]initWithFrame:CGRectMake(0, 0, self.size_Width, self.size_Height) detailsID:detailsID];
-    [mainTable setBackgroundColor:ColorWithRGB(210, 34, 34, 1)];
+    [mainTable setBackgroundColor:[UIColor whiteColor]];
     [self addSubview:mainTable];
 }
 @end

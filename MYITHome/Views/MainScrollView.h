@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MainScrollView : UIScrollView
+@property (nonatomic, strong) void (^tBlock)(CGFloat);
 - (instancetype)initWithFrame:(CGRect)frame pages:(NSMutableArray *)pagesArray;
+- (void)setCurrentPage:(CGFloat)currentPage;
 @end

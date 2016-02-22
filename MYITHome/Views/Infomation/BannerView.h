@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BannerView : UIView
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame url:(NSURL *)url;
 @end

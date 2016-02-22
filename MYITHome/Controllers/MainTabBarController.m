@@ -28,30 +28,27 @@
     UINavigationController *informationNav = [[UINavigationController alloc]initWithRootViewController:informationVC];
     [informationNav.tabBarItem setTitle:@"资讯"];
     [informationNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:ColorWithRGB(255, 143, 92, 1)} forState:UIControlStateSelected];
-    [informationNav.tabBarItem setImage:[[UIImage imageNamed:@"TabBarIcon_Infomation"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [informationNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"TabBarIcon_Infomation_Highlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [informationNav.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
+    [informationNav.tabBarItem setImage:[[UIImage imageNamed:@"MainTabBar_news_normal@2x~iphone"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [informationNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"MainTabBar_news_active@2x~iphone"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     ITSquareViewController *itSquareVC = [[ITSquareViewController alloc]init];
     UINavigationController *itSquareNav = [[UINavigationController alloc]initWithRootViewController:itSquareVC];
     [itSquareNav.tabBarItem setTitle:@"IT圈"];
     [itSquareNav.tabBarItem setImage:[[UIImage imageNamed:@"TabBarIcon_ITSquare"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [itSquareNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"TabBarIcon_ITSquare_Highlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [itSquareNav.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
+    [itSquareNav.tabBarItem setImageInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
     
     DiscovreryViewController *discovreryVC = [[DiscovreryViewController alloc]init];
     UINavigationController *discovreryNav = [[UINavigationController alloc]initWithRootViewController:discovreryVC];
     [discovreryNav.tabBarItem setTitle:@"发现"];
-    [discovreryNav.tabBarItem setImage:[[UIImage imageNamed:@"TabBarIcon_Discovrery"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [discovreryNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"TabBarIcon_Discovrery_Highlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [discovreryNav.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
+    [discovreryNav.tabBarItem setImage:[[UIImage imageNamed:@"MainTabBar_found_normal@2x~iphone"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [discovreryNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"MainTabBar_found_active@2x~iphone"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     MineViewController *mineVC = [[MineViewController alloc]init];
     UINavigationController *mineNav = [[UINavigationController alloc]initWithRootViewController:mineVC];
     [mineNav.tabBarItem setTitle:@"我"];
-    [mineNav.tabBarItem setImage:[[UIImage imageNamed:@"TabBarIcon_Mine"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [mineNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"TabBarIcon_Mine_Highlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [mineNav.tabBarItem setImageInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
+    [mineNav.tabBarItem setImage:[[UIImage imageNamed:@"MainTabBar_user_normal@2x~iphone"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [mineNav.tabBarItem setSelectedImage:[[UIImage imageNamed:@"MainTabBar_user_active@2x~iphone"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     
     [self setViewControllers:@[informationNav,itSquareNav,discovreryNav,mineNav]];
 }

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MainTableViewCellModel.h"
 @interface MainTableViewCell : UITableViewCell
+@property (nonatomic, strong) MainTableViewCellModel *model;
 - (void)setViewsWithModel:(MainTableViewCellModel *)model;
 @end

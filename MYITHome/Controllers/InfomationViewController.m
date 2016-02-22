@@ -9,8 +9,11 @@
 #import "InfomationViewController.h"
 #import "NavScrollView.h"
 #import "MainScrollView.h"
+#import "MainTableViewCellModel.h"
+#import "ArticleViewController.h"
 @interface InfomationViewController () <UIScrollViewDelegate>
-@property (nonatomic, strong) void(^tBlock)(NSInteger);
+@property (nonatomic, strong) NavScrollView *navScrollView;
+@property (nonatomic, strong) MainScrollView *mainScrollView;
 @property (nonatomic, copy) NSMutableArray *navDataArr;
 @end
 
@@ -18,18 +21,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushViewController:) name:@"pushViewController" object:nil];//注册通知,在tableView中点击cell,由主控制器实现,push文章页
     [self setNavBar];
     [self setMainScrollView];
     
 }
 
+
+//通知触发事件
+- (void)pushViewController:(NSNotification *)notif{
+    MainTableViewCellModel *cell = notif.object;
+    ArticleViewController *articleVC = [[ArticleViewController alloc]initWithModel:cell];
+    [articleVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationItem setHidesBackButton:YES];
+    [self.navigationController pushViewController:articleVC animated:YES];
+}
+
+//隐藏导航栏,IT之家原版客户端效果暂时还做不出来,继续努力!
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
 - (void)setMainScrollView{
     MainScrollView *mainScrollView = [[MainScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.size_Width, self.view.size_Height-64) pages:_navDataArr];
+    _mainScrollView = mainScrollView;
+    mainScrollView.tBlock = ^void(CGFloat a){
+        [_navScrollView setCurrentPage:a];
+    };
     [self.view addSubview:mainScrollView];
 }
 
 - (void)setNavBar{
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:210.0f/255.0f green:45.0f/255.0f blue:49.0f/255.0f alpha:1]];//导航栏背景色
+    [self.navigationController.navigationBar setBarTintColor:ColorWithRGB(210, 45, 49, 1)];//导航栏背景色
     [self.navigationController.navigationBar setTranslucent:NO];//关闭透明效果
     [self.navigationController.tabBarItem setTitle:@"资讯"];//配置tabBar
     [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0F], NSForegroundColorAttributeName : [UIColor colorWithRed:210.0f/255.0f green:45.0f/255.0f blue:49.0f/255.0f alpha:1]} forState:UIControlStateSelected];
@@ -48,14 +71,13 @@
         [dataArr addObject:dataDic];
     }];
     _navDataArr = dataArr;
-    __block NSMutableArray *weakDataArr = _navDataArr;//使用block触发导航栏按钮的点击事件
     NavScrollView *navScrollView = [[NavScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.size_Width, navigationBar.size_Height) data:dataArr];
     [navigationBar addSubview:navScrollView];
+    _navScrollView = navScrollView;
     navScrollView.tBlock = ^void(NSInteger a){
-        NSDictionary *dic = weakDataArr[a];
-        NSLog(@"切换到%@",dic[@"n"]);//待写
-#warning NavScrollView switch views
+        [_mainScrollView setCurrentPage:a];
     };
+    
 }
 
 - (void)didReceiveMemoryWarning {
