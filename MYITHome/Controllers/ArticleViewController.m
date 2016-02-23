@@ -13,17 +13,18 @@
 @property (nonatomic, strong) NSMutableArray *xmlDataArr;
 @property (nonatomic, strong) NSMutableArray *modelsArr;
 @property (nonatomic, strong) NSString *startElement;
+@property (nonatomic, strong) NSDictionary *dic;
 
 
 @end
 
 @implementation ArticleViewController
 
-- (instancetype)initWithModel:(MainTableViewCellModel *)model
+- (instancetype)initWithModel:(NSDictionary *)dic
 {
     self = [super init];
     if (self) {
-        _model = model;
+        _dic = dic;
     }
     return self;
 }
@@ -63,8 +64,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.ithome.com/xml/newscontent/%@/%@.xml",[_model.newsid substringToIndex:3],[_model.newsid substringFromIndex:3]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.ithome.com/xml/newscontent/%@/%@.xml",[[_dic objectForKey:@"newsid"] substringToIndex:3],[[_dic objectForKey:@"newsid"] substringFromIndex:3]]];
     NSXMLParser *parser = [[NSXMLParser alloc]initWithContentsOfURL:url];
     [parser setDelegate:self];
     [parser parse];
@@ -79,7 +81,7 @@
     [webView setDelegate:self];
     [webView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:webView];
-    [webView loadHTMLString:[NSString stringWithFormat:@"<br /><font size=\"4\"><b>%@</b></font> <br/> <font color=\"#7f7f7f\" size=\"3\">%@    %@(%@)</font><br /><hr />%@",_model.title,_model.postdate,model.newssource,model.newsauthor,model.detail] baseURL:nil];
+    [webView loadHTMLString:[NSString stringWithFormat:@"<br /><font size=\"4\"><b>%@</b></font> <br/> <font color=\"#7f7f7f\" size=\"3\">%@    %@(%@)</font><br /><hr />%@",[_dic objectForKey:@"title"],[_dic objectForKey:@"postdate"],model.newssource,model.newsauthor,model.detail] baseURL:nil];
 }
 
 //压缩图片,适配窗口大小

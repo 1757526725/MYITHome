@@ -10,7 +10,6 @@
 #import "MainTableView.h"
 
 @interface InfoMainView()
-
 @end
 @implementation InfoMainView
 /**
@@ -26,7 +25,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setViewsWithDetailsID:detailsID];
+        _initFlag = NO;
+        if (detailsID == 0) {
+            [self setViewsWithDetailsID:detailsID];
+        }
     }
     return self;
 }
@@ -35,5 +37,6 @@
     MainTableView *mainTable = [[MainTableView alloc]initWithFrame:CGRectMake(0, 0, self.size_Width, self.size_Height) detailsID:detailsID];
     [mainTable setBackgroundColor:[UIColor whiteColor]];
     [self addSubview:mainTable];
+    _initFlag = YES;
 }
 @end

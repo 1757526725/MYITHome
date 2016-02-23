@@ -10,5 +10,5 @@
 #import "MainTableViewCellModel.h"
 @interface ArticleViewController : UIViewController
 @property (nonatomic, strong) MainTableViewCellModel *model;
-- (instancetype)initWithModel:(MainTableViewCellModel *)model;
+- (instancetype)initWithModel:(NSDictionary *)dic;
 @end

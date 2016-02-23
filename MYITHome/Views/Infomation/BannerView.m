@@ -27,12 +27,20 @@
         self.frame = frame ;
         [self setBackgroundColor:[UIColor whiteColor]];
         NSXMLParser *parser = [[NSXMLParser alloc]initWithContentsOfURL:url];
-        NSLog(@"%@",url);
         [parser setDelegate:self];
         [parser parse];
         [self setViews];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(BannerClicked)];
+        [self addGestureRecognizer:tapGesture];
     }
     return self;
+}
+
+- (void)BannerClicked{
+    BannerModel *model = _modelsArr[_pageControl.currentPage];
+    NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:model.title,@"title",model.link,@"newsid",@"",@"postdate", nil];
+    NSNotification *notification =[NSNotification notificationWithName:@"pushViewController" object:dic userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser{

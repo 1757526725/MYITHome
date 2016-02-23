@@ -30,8 +30,8 @@
 
 //通知触发事件
 - (void)pushViewController:(NSNotification *)notif{
-    MainTableViewCellModel *cell = notif.object;
-    ArticleViewController *articleVC = [[ArticleViewController alloc]initWithModel:cell];
+    NSDictionary *dic = notif.object;
+    ArticleViewController *articleVC = [[ArticleViewController alloc]initWithModel:dic];
     [articleVC setHidesBottomBarWhenPushed:YES];
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationController pushViewController:articleVC animated:YES];

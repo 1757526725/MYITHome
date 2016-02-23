@@ -31,12 +31,19 @@
 - (void)setPageViews:(NSMutableArray *)pagesArray{
     for (NSInteger i = 0; i < pagesArray.count; i++) {
         InfoMainView *infoMainView = [[InfoMainView alloc]initWithFrame:CGRectMake(i*self.size_Width, 0, self.size_Width, self.size_Height) details:i];
+        [infoMainView setTag:i+200];
         [self addSubview:infoMainView];
     }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     _tBlock(scrollView.contentOffset.x/self.size_Width);
+    NSInteger currentPage = scrollView.contentOffset.x/self.size_Width;
+    InfoMainView *infoview = [self viewWithTag:currentPage+200];
+    if (currentPage && !infoview.initFlag) {
+        [infoview setViewsWithDetailsID:currentPage];
+        [infoview setInitFlag:YES];
+    }
 }
 
 - (void)setViewsWithPageCount:(NSInteger)pageCount{

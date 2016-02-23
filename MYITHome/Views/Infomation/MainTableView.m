@@ -10,8 +10,10 @@
 #import "MainTableViewCell.h"
 #import "BannerView.h"
 #import "ArticleViewController.h"
+#import "MJRefresh.h"
 @interface MainTableView()<UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate>
 @property (nonatomic, assign) NSInteger detailsID;
+@property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) NSMutableDictionary *xmlDataDic;
 @property (nonatomic, strong) NSMutableArray *xmlDataArr;
 @property (nonatomic, strong) NSString *startElement;
@@ -46,14 +48,26 @@
             _modelsArray = [[NSMutableArray alloc]init];
             [self setDelegate:self];
             [self setDataSource:self];
-            NSURL *url = [NSURL URLWithString:urlArray[_detailsID]];
-            NSXMLParser *parser = [[NSXMLParser alloc]initWithContentsOfURL:url];
-            [parser setDelegate:self];
-            [parser parse];
-            [self arrToModel];
+            _url = [NSURL URLWithString:urlArray[_detailsID]];
+        [self loadData];
     }
+    self.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     return self;
 }
+
+- (void)loadData{
+    NSXMLParser *parser = [[NSXMLParser alloc]initWithContentsOfURL:_url];
+    [parser setDelegate:self];
+    [parser parse];
+    [self arrToModel];
+    [self reloadData];
+}
+
+- (void)loadNewData{
+    [self loadData];
+    [self.mj_header endRefreshing];
+}
+
 
 /**
  *  将解析xml得到的数据存到model中
@@ -124,7 +138,8 @@
 //点击cell后push到文章页VC
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MainTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    NSNotification *notification =[NSNotification notificationWithName:@"pushViewController" object:cell.model userInfo:nil];
+    NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:cell.model.newsid,@"newsid",cell.model.title,@"title",cell.model.postdate,@"postdate", nil];
+    NSNotification *notification =[NSNotification notificationWithName:@"pushViewController" object:dic userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 

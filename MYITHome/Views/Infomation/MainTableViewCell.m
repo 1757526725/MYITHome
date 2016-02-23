@@ -9,8 +9,9 @@
 #import "MainTableViewCell.h"
 @implementation MainTableViewCell
 
-//cell小,偷懒直接add图片和文字了
+//cell小,直接add图片和文字了
 - (void)setViewsWithModel:(MainTableViewCellModel *)model{
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
     _model = model;
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, self.size_Width/4-5, 60)];
     [imageView sd_setImageWithURL:[NSURL URLWithString:model.image]];

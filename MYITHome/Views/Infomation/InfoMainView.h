@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface InfoMainView : UIScrollView
+@property (nonatomic) BOOL initFlag;
 - (instancetype)initWithFrame:(CGRect)frame details:(NSInteger)detailsID;
+- (void)setViewsWithDetailsID:(NSInteger)detailsID;
 @end
