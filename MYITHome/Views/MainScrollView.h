@@ -10,6 +10,8 @@
 
 @interface MainScrollView : UIScrollView
 @property (nonatomic, strong) void (^tBlock)(CGFloat);
-- (instancetype)initWithFrame:(CGRect)frame pages:(NSMutableArray *)pagesArray;
+@property (nonatomic) BOOL isInfo;
+@property (nonatomic, strong) NSArray *dataArr;
+- (instancetype)initWithFrame:(CGRect)frame pages:(NSMutableArray *)pagesArray isInfo:(BOOL)isInfo;
 - (void)setCurrentPage:(CGFloat)currentPage;
 @end

@@ -60,9 +60,27 @@
 }
 
 /**
- *  按钮点击事件,由InfomationViewController执行
+ *  按钮点击事件,由Infomation主ViewController执行
  *
  *  @param button 所点击的按钮
+ */
+
+/**
+ *  用来获取从0到index个按钮的宽度
+ *
+ *  @param index 第index个按钮
+ *
+ *  @return 返回宽度
+ */
+- (CGFloat)widthOfCurrentButton:(NSInteger)index{
+    CGFloat width = 36;
+    for (NSInteger i = 0; i<=index; i++) {
+        width += [self viewWithTag:i + 100].size_Width+80;
+    }
+    return width;
+}
+/*
+       11111   22222   33333   44444
  */
 - (void)navBarButtonClicked:(UIButton *)button{
     for (NSInteger i = 0; i < _dataArr.count; i++){
@@ -76,8 +94,9 @@
             [thebtn setTitleColor:ColorWithRGB(222, 174, 175, 1) forState:UIControlStateNormal];
         }
     }
-    [self setContentOffset:CGPointMake((button.tag-100) * [self widthOfString:@"排行榜"], 0)];
-
+    //[self setContentOffset:CGPointMake(button.size_X, 0)];
+    //NSLog(@"点了%@,按钮宽度%f,设置横坐标为:%f",button.titleLabel.text,button.size_Width,[self widthOfCurrentButton:button.tag-100]);
+    //加了按钮宽度+80
     if (_tBlock) {
         _tBlock(button.tag-100);
     }

@@ -43,7 +43,7 @@
 }
 
 - (void)setMainScrollView{
-    MainScrollView *mainScrollView = [[MainScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.size_Width, self.view.size_Height-64) pages:_navDataArr];
+    MainScrollView *mainScrollView = [[MainScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.size_Width, self.view.size_Height-64) pages:_navDataArr isInfo:YES];
     _mainScrollView = mainScrollView;
     mainScrollView.tBlock = ^void(CGFloat a){
         [_navScrollView setCurrentPage:a];
@@ -55,7 +55,7 @@
     [self.navigationController.navigationBar setBarTintColor:ColorWithRGB(210, 45, 49, 1)];//导航栏背景色
     [self.navigationController.navigationBar setTranslucent:NO];//关闭透明效果
     [self.navigationController.tabBarItem setTitle:@"资讯"];//配置tabBar
-    [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0F], NSForegroundColorAttributeName : [UIColor colorWithRed:210.0f/255.0f green:45.0f/255.0f blue:49.0f/255.0f alpha:1]} forState:UIControlStateSelected];
+    [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0F], NSForegroundColorAttributeName : ITHOMERED} forState:UIControlStateSelected];
     [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0F],  NSForegroundColorAttributeName:[UIColor grayColor]} forState:UIControlStateNormal];
     [self setNavBarViews:self.navigationController.navigationBar];
 }

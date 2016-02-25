@@ -7,9 +7,13 @@
 //
 
 #import "ITSquareViewController.h"
+#import "MainScrollView.h"
+#import "NavScrollView.h"
 
 @interface ITSquareViewController ()
-
+@property (nonatomic, strong) NavScrollView *navScrollView;
+@property (nonatomic, strong) MainScrollView *mainScrollView;
+@property (nonatomic, copy) NSMutableArray *navDataArr;
 @end
 
 @implementation ITSquareViewController
@@ -17,12 +21,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:210.0f/255.0f green:45.0f/255.0f blue:49.0f/255.0f alpha:1]];
+    [self.navigationController.navigationBar setBarTintColor:ITHOMERED];
     [self.navigationController.navigationBar setTranslucent:NO];
-    [self.navigationItem setTitle:@"IT圈"];
-    [self.navigationController.tabBarItem setTitle:@"IT圈"];
+    [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont  systemFontOfSize:12], NSForegroundColorAttributeName : ITHOMERED} forState:UIControlStateSelected];
+    [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12],  NSForegroundColorAttributeName:[UIColor grayColor]} forState:UIControlStateNormal];
+    [self setNavBar];
+    [self setMainScrollView];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
+- (void)setMainScrollView{
+    MainScrollView *mainScrollView = [[MainScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.size_Width, self.view.size_Height-64) pages:_navDataArr isInfo:NO];
+    _mainScrollView = mainScrollView;
+    mainScrollView.tBlock = ^void(CGFloat a){
+        [_navScrollView setCurrentPage:a];
+    };
+    [self.view addSubview:mainScrollView];
+}
+
+
+- (void)setNavBar{
+    [self.navigationController.navigationBar setBarTintColor:ColorWithRGB(210, 45, 49, 1)];//导航栏背景色
+    [self.navigationController.navigationBar setTranslucent:NO];//关闭透明效果
+    [self.navigationController.tabBarItem setTitle:@"资讯"];//配置tabBar
     [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0F], NSForegroundColorAttributeName : [UIColor colorWithRed:210.0f/255.0f green:45.0f/255.0f blue:49.0f/255.0f alpha:1]} forState:UIControlStateSelected];
     [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0F],  NSForegroundColorAttributeName:[UIColor grayColor]} forState:UIControlStateNormal];
+    [self setNavBarViews:self.navigationController.navigationBar];
+}
+
+- (void)setNavBarViews:(UINavigationBar *)navigationBar{
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://apiquan.ithome.com/api/category"]];
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    NSArray *responseDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:nil];
+    _navDataArr = [responseDic mutableCopy];
+    NavScrollView *navScrollView = [[NavScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.size_Width, navigationBar.size_Height) data:_navDataArr];
+    [navigationBar addSubview:navScrollView];
+    _navScrollView = navScrollView;
+    navScrollView.tBlock = ^void(NSInteger a){
+        [_mainScrollView setCurrentPage:a];
+    };
+    
 }
 
 - (void)didReceiveMemoryWarning {
