@@ -42,6 +42,34 @@
     [self.mj_header endRefreshing];
 }
 
+//点击cell后push到文章页VC
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row > 0) {
+        /*
+         头像:http://avatar.ithome.com/avatars/00X/XX/XX/XX_60.jpg
+         X为model.uid,不够前面补0
+         没有头像的是http://quan.ithome.com/statics/images/noavatar.png
+         
+         model格式:
+         "id": 21674,
+         "t": "IT圈解答组成立公告",
+         "c": "[置顶]",
+         "cn": "科技畅谈",
+         "uid": 1100238,
+         "un": "赖先生",
+         "rn": "赖先生",
+         "pt": "/Date(1452347154387)/",
+         "rt": "/Date(1456402735667)/",
+         "vc": 8902,
+         "rc": 336
+         */
+        ITSquareTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:cell.model.mainid,@"postid",[NSString stringWithFormat:@"%@%@",cell.model.c,cell.model.t],@"posttitle",cell.model.vc,@"viewcount",cell.model.rc,@"replycount", nil];
+        NSNotification *notification =[NSNotification notificationWithName:@"pushPostViewController" object:dic userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+    }
+}
+
 - (void)arrToModel{
     _modelArr = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i < _dataArr.count; i++) {
@@ -54,7 +82,7 @@
     if (indexPath.row == 0) {
         return 50;
     }
-    else return 60;
+    else return 80;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -71,6 +99,7 @@
     ITSquareTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[ITSquareTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:idf];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     if (indexPath.row == 0) {
         [cell setBackgroundColor:[UIColor whiteColor]];

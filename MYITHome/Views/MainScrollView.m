@@ -76,7 +76,7 @@
     [self setPagingEnabled:YES];
     [self setShowsHorizontalScrollIndicator:YES];
     [self setBackgroundColor:[UIColor whiteColor]];
-    [self setShowsHorizontalScrollIndicator:YES];
+    [self setShowsHorizontalScrollIndicator:NO];
     [self setShowsVerticalScrollIndicator:NO];
     
 }

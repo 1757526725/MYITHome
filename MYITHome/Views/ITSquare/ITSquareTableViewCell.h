@@ -10,5 +10,6 @@
 #import "ITSquareTableViewModel.h"
 @interface ITSquareTableViewCell : UITableViewCell
 @property (nonatomic ,assign) CGFloat height;
+@property (nonatomic, strong) ITSquareTableViewModel *model;
 - (void)setViewsWithModel:(ITSquareTableViewModel *)model;
 @end

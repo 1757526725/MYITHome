@@ -9,6 +9,7 @@
 #import "ITSquareViewController.h"
 #import "MainScrollView.h"
 #import "NavScrollView.h"
+#import "PostViewController.h"
 
 @interface ITSquareViewController ()
 @property (nonatomic, strong) NavScrollView *navScrollView;
@@ -20,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushPostViewController:) name:@"pushPostViewController" object:nil];//注册通知,在tableView中点击cell,由主控制器实现,push文章页
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setBarTintColor:ITHOMERED];
     [self.navigationController.navigationBar setTranslucent:NO];
@@ -27,6 +29,14 @@
     [self.navigationController.tabBarItem setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12],  NSForegroundColorAttributeName:[UIColor grayColor]} forState:UIControlStateNormal];
     [self setNavBar];
     [self setMainScrollView];
+}
+
+- (void)pushPostViewController:(NSNotification *)noti{
+    NSDictionary *dic = noti.object;
+    PostViewController *postViewController = [[PostViewController alloc]initWithDic:dic];
+    [postViewController setHidesBottomBarWhenPushed:YES];
+    [self.navigationItem setHidesBackButton:YES];
+    [self.navigationController pushViewController:postViewController animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

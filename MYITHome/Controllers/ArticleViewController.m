@@ -109,7 +109,6 @@
     [self.navigationController.navigationBar setHidden:YES];
 }
 
-//查到说用透明图片可以让导航栏隐藏,但是经尝试没有达成效果,继续努力
 - (void)viewDidAppear:(BOOL)animated{
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"aeroNavBar"]  forBarMetrics:UIBarMetricsDefault];
 }
