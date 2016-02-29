@@ -47,7 +47,31 @@
     [webView setDelegate:self];
     [webView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:webView];
-    [webView loadHTMLString:[NSString stringWithFormat:@"<br /><font size=\"4\"><b>%@</b></font><br /> <br /><font color=\"#7f7f7f\" size=\"3\"><img src=\"forum_renqi.png\" height=\"17\" width=\"20\"></img>%@    <img src=\"forum_huifushu.png\" height=\"17\" width=\"20\"></img>%@</font><hr />",[_postDic objectForKey:@"posttitle"],[_postDic objectForKey:@"viewcount"],[_postDic objectForKey:@"replycount"]] baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+    //设备颜色字段为@"Cl",1是WP RGB 191 76 161 #BF4CA1,3是iOS RGB 87 121 203 #5779CB,8是安卓 RGB 135 166 63 #87A63F,10是Win10客户端 RGB 23 133 234 #1885EA
+    [webView loadHTMLString:[NSString stringWithFormat:
+                             @"<br /><font size=\"4\"><b>%@</b></font><br /> <br /><font color=\"#7f7f7f\" size=\"3\"><img src=\"forum_renqi.png\" height=\"17\" width=\"20\"></img>%@    <img src=\"forum_huifushu.png\" height=\"17\" width=\"20\"></img>%@</font><hr /><table width=\"100%%\"><tr><td align=\"left\"><img src=\"noavatar.png\" height=\"16\" width=\"16\"> <font size=\"1.5\" color=\"#4981da\"> %@  </font><font color=\"%@\">%@</font></td> <td align=\"right\"><font size=\"1\">楼主</font><br /><font size=\"1\">%@</font></p> </td></tr></table><font size=\"2\">%@</font><hr /><hr />",
+                             [_postDic objectForKey:@"posttitle"], //帖子标题
+                             [_postDic objectForKey:@"viewcount"], //查看数
+                             [_postDic objectForKey:@"replycount"],//回复数
+                             [_postDic objectForKey:@"un"],//楼主
+                             [_model.Cl integerValue] == 1?@"#BF4CA1":([_model.Cl integerValue] == 3?@"5779CB":([_model.Cl integerValue] == 8?@"84A63F":@"#1885EA")),//设备颜色 1 WP,3 iOS, 8 安卓,10 Win10
+                             _model.Ta,//设备名称
+                             [self getDateString:[_postDic objectForKey:@"pt"]], //发帖时间
+                             _model.content//帖子具体内容
+                             ] baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+}
+
+/*
+    <table width=\"100%%\"><tr><td align=\"left\"><img src=\"noavatar.png\" height=\"16\" width=\"16\"> <font size=\"1.5\" color=\"#4981da\"> %@  </font><font color=\"%@\">%@</font></td> <td align=\"right\"><font size=\"1\">楼主</font><br /><font size=\"1\">%@</font></p> </td></tr></table><font size=\"2\">%@</font>
+ */
+
+- (NSString *)getDateString:(NSString *)string{
+    string = [string substringWithRange:NSMakeRange(6, 13)];
+    NSTimeInterval interval=[string doubleValue] / 1000.0;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+    NSDateFormatter *dateformat = [[NSDateFormatter alloc] init];
+    [dateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [dateformat stringFromDate: date];
 }
 
 //压缩图片,适配窗口大小

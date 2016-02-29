@@ -64,7 +64,7 @@
          "rc": 336
          */
         ITSquareTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:cell.model.mainid,@"postid",[NSString stringWithFormat:@"%@%@",cell.model.c,cell.model.t],@"posttitle",cell.model.vc,@"viewcount",cell.model.rc,@"replycount", nil];
+        NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:cell.model.mainid,@"postid",[NSString stringWithFormat:@"%@%@",cell.model.c,cell.model.t],@"posttitle",cell.model.vc,@"viewcount",cell.model.rc,@"replycount",cell.model.un,@"un",cell.model.pt,@"pt",cell.model.uid,@"uid", nil];
         NSNotification *notification =[NSNotification notificationWithName:@"pushPostViewController" object:dic userInfo:nil];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
