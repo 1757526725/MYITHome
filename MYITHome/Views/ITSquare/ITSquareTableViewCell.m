@@ -7,7 +7,9 @@
 //
 
 #import "ITSquareTableViewCell.h"
-
+@interface ITSquareTableViewCell()<SDWebImageManagerDelegate>
+@property (nonatomic, strong) UIImageView *avararImageView;
+@end
 @implementation ITSquareTableViewCell
 /*
     头像:http://avatar.ithome.com/avatars/00X/XX/XX/XX_60.jpg
@@ -27,16 +29,20 @@
  "vc": 8902,
  "rc": 336
  */
+- (void)loadAvatars{
+    [_avararImageView sd_setImageWithURL:[NSURL URLWithString:[self getAvatarURL:_model.uid]] placeholderImage:[UIImage imageNamed:@"noavatar"] options:SDWebImageContinueInBackground];
+}
 - (void)setViewsWithModel:(ITSquareTableViewModel *)model{
     _model = model;
     //头像ImageView
     UIImageView *avatrImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 30, 30)];
-    [avatrImageView setBackgroundColor:[UIColor redColor]];
+    _avararImageView = avatrImageView;
+    [avatrImageView setBackgroundColor:[UIColor whiteColor]];
     [avatrImageView.layer setMasksToBounds:YES];
-    [avatrImageView setImage:[UIImage imageNamed:@"noavatar"]];
     [avatrImageView.layer setCornerRadius:15];
     [self addSubview:avatrImageView];
-    
+    //[avatrImageView sd_setImageWithURL:[NSURL URLWithString:[self getAvatarURL:model.uid]] placeholderImage:[UIImage imageNamed:@"noavatar"] options:SDWebImageContinueInBackground];
+     [NSThread detachNewThreadSelector:@selector(loadAvatars) toTarget:self withObject:nil];
     //文章标题Label
     UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(avatrImageView.size_X_Width+20, 10, self.size_Width-avatrImageView.size_Width-20, 40)];
     [titlelabel setText:[NSString stringWithFormat:@"%@ %@",model.c,model.t]];
@@ -86,6 +92,15 @@
     
 }
 
+- (NSString *)getAvatarURL:(NSString *)uid{
+    NSString *theuid = uid;
+    for (NSInteger i = 0; i< 9 - uid.length ; i++) {
+        theuid = [NSString stringWithFormat:@"0%@",theuid];
+    }
+    NSString *subID= [NSString stringWithFormat:@"http://avatar.ithome.com/avatars/%@/%@/%@/%@_60.jpg",[theuid substringWithRange:NSMakeRange(0, 3)],[theuid substringWithRange:NSMakeRange(3, 2)],[theuid substringWithRange:NSMakeRange(5, 2)],[theuid substringWithRange:NSMakeRange(7, 2)]];
+    return subID;
+}
+
 - (UILabel *)timeLabel:(NSString *)thetime position:(CGPoint)point{
     // thetime = @"/Date(1452347154387)/";
     thetime = [thetime substringWithRange:NSMakeRange(6, 13)];
@@ -109,6 +124,8 @@
     [label setTextColor:ColorWithRGB(93, 93, 93, 1)];
     return label;
 }
+
+
 
 /**
  *  计算时间差

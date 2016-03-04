@@ -13,6 +13,7 @@
     self = [super init];
     if (self) {
         [self setValuesForKeysWithDictionary:dic];
+        _uid = [NSString stringWithFormat:@"%@",_uid];
     }
     return self;
 }
