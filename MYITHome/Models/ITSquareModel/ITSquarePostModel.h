@@ -15,6 +15,6 @@
 @property (nonatomic, strong) NSString *ul;
 @property (nonatomic, strong) NSString *rc;
 @property (nonatomic, strong) NSArray *imgs;
-@property (nonatomic, strong) NSDictionary *reply;
+@property (nonatomic, strong) NSArray *reply;
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 @end
