@@ -7,6 +7,10 @@ TODO:
 -线程优化
 -webview 添加.css样式
 
+2016年3月14日
+完成了IT圈帖子回复以及楼中楼显示
+用AVCapture写了二维码扫描,高仿ZXing
+
 2016年3月11日
 完成了DOM形式解析XML（IT之家更新了版本，SAX形式有BUG）
 
