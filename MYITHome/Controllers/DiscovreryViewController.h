@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DiscovreryViewController : UIViewController
-
+@property (nonatomic, weak) NSString *UUU;
 @end

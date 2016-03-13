@@ -52,7 +52,6 @@
     [self.view addSubview:mainScrollView];
 }
 
-
 - (void)setNavBar{
     [self.navigationController.navigationBar setBarTintColor:ColorWithRGB(210, 45, 49, 1)];//导航栏背景色
     [self.navigationController.navigationBar setTranslucent:NO];//关闭透明效果

@@ -29,6 +29,8 @@
     return self;
 }
 
+
+
 - (void)setPagingView{
     _pagingView = [[PagingView alloc]init];
     [_pagingView setDelegate:self];

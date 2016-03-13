@@ -30,7 +30,7 @@
 - (void)setTables{
     for (NSInteger i = 0; i < 3; i++) {
         ITSquareTableView *tableView = [[ITSquareTableView alloc]initWithFrame:CGRectMake(self.size_Width*i, 0, self.size_Width, self.size_Height) detailsID:_detailsID typeID:i*2%3];
-        [tableView setBackgroundColor:ColorWithRGB(i*40, i*50, i*60, 1)];
+        [tableView setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:tableView];
     }
 }
